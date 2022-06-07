@@ -64,9 +64,6 @@
    asm module.*/
 #if !defined(_FROM_ASM_)
 
-#if !defined (AT32F403Axx)
-    #include "board.h"
-#endif
 /* If the device type is not externally defined, for example from the Makefile,
    then a file named board.h is included. This file must contain a device
    definition compatible with the include file.*/

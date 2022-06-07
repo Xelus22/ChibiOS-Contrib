@@ -126,7 +126,7 @@
 /**
  * @brief   Maximum ADC clock frequency.
  */
-#define AT32_ADCCLK_MAX        14000000
+#define AT32_ADCCLK_MAX        28000000
 /** @} */
 
 /**
@@ -210,9 +210,9 @@
 #define AT32_USB_SRC_HSI       (1 << 8)     /**< USB clock source is HSI            */
                                             /**< HSI_DIV_EN=1 must be guaranteed>   */
 
-#define AT32_SCLK_SRC_HSI_DIV6 (0 << 9)     /**< SCLK HSI source is 8MHz */
-#define AT32_SCLK_SRC_HSI_DIV1 (1 << 9)     /**< SCLK HSI source is 48MHz or 8MHz   */
-                                            /**< HSI_DIV_EN=1, 48MHz>   */
+#define AT32_HSI_SYS_SRC_HSI_DIV6   (0 << 9)     /**< SCLK HSI source is 8MHz */
+#define AT32_HSI_SYS_SRC_HSI_DIV_EN (1 << 9)     /**< SCLK HSI source is 48MHz or 8MHz   */
+                                                 /**< HSI_DIV_EN=1, 48MHz>   */
 
 #define AT32_HSE_PRE_PLL_DIV2  (0 << 12)    /**< HSE clock divide by 2      */
 #define AT32_HSE_PRE_PLL_DIV3  (1 << 12)    /**< HSE clock divide by 3      */
@@ -333,6 +333,24 @@
  */
 #if !defined(AT32_PLLSRC) || defined(__DOXYGEN__)
 #define AT32_PLLSRC                AT32_PLLSRC_HSI
+#endif
+
+/**
+ * @brief   Clock source to control HSI SYS CTRL
+ * @note    The default value is calculated for a 240MHz system clock from
+ *          a 48MHz HSI crystal using the PLL.
+ */
+#if !defined(AT32_HSI_SYS_SRC) || defined(__DOXYGEN__)
+#define AT32_HSI_SYS_SRC           AT32_HSI_SYS_SRC_HSI_DIV_EN
+#endif
+
+/**
+ * @brief   Clock source to control HSI DIV EN
+ * @note    The default value is calculated for a 240MHz system clock from
+ *          a 48MHz HSI crystal using the PLL.
+ */
+#if !defined(AT32_HSI_SRC) || defined(__DOXYGEN__)
+#define AT32_HSI_SRC           AT32_HSI_SRC_DIV1
 #endif
 
 /**
@@ -574,6 +592,8 @@
 #define AT32_PLLCLKIN              (AT32_HSECLK / 4)
 #elif (AT32_PLLXTPRE == AT32_PLLXTPRE_DIVX) && (AT32_HSE_DIV == AT32_HSE_PRE_PLL_DIV5)
 #define AT32_PLLCLKIN              (AT32_HSECLK / 5)
+#else
+#error "invalid AT32_HSE_DIV value specified"
 #endif
 #elif AT32_PLLSRC == AT32_PLLSRC_HSI
 #define AT32_PLLCLKIN              (AT32_HSICLK / 12)
@@ -597,12 +617,31 @@
 #endif
 
 /**
+ * @brief   HSI clock source out to Sys Clock
+ * @note    Controlled by HSI_DIV_EN and HSI_SYS_CTRL
+ */
+#if (AT32_HSI_SYS_SRC == AT32_HSI_SYS_SRC_HSI_DIV_EN)
+    #if (AT32_HSI_SRC == AT32_HSI_SRC_DIV1)
+    #define AT32_HSI_SYS_CLK            AT32_HSICLK
+    #elif (AT32_HSI_SRC == AT32_HSI_SRC_DIV6)
+    #define AT32_HSI_SYS_CLK            (AT32_HSICLK / 6)
+    #else
+    #error "invalid AT32_HSI_SRC value specified"
+    #endif
+#elif (AT32_HSI_SYS_SRC == AT32_HSI_SYS_SRC_HSI_DIV6)
+#define AT32_HSI_SYS_CLK            (AT32_HSICLK / 6)
+#else 
+#error "invalid AT32_HSI_SYS_SRC value specified"
+#endif
+
+
+/**
  * @brief   System clock source.
  */
 #if (AT32_SW == AT32_SW_PLL) || defined(__DOXYGEN__)
 #define AT32_SYSCLK                AT32_PLLCLKOUT
 #elif (AT32_SW == AT32_SW_HSI)
-#define AT32_SYSCLK                AT32_HSICLK
+#define AT32_SYSCLK                AT32_HSI_SYS_CLK
 #elif (AT32_SW == AT32_SW_HSE)
 #define AT32_SYSCLK                AT32_HSECLK
 #else
@@ -751,19 +790,6 @@
 #else
 #define AT32_TIMCLK2               (AT32_PCLK2 * 2)
 #endif
-
-/**
- * @brief   Flash settings.
- */
-#if (AT32_HCLK <= 24000000) || defined(__DOXYGEN__)
-#define AT32_FLASHBITS             0x00000010
-#elif AT32_HCLK <= 48000000
-#define AT32_FLASHBITS             0x00000011
-#else
-#define AT32_FLASHBITS             0x00000012
-#endif
-
-#endif /* _HAL_LLD_F103_H_ */
 
 /** @} */
 /*===========================================================================*/
