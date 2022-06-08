@@ -177,13 +177,13 @@ typedef enum
     DMA2_Channel3_IRQn          = 58,     /*!< dma2 channel 3 global interrupt                      */
     DMA2_Channel4_5_IRQn        = 59,     /*!< dma2 channel 4 and channel 5 global interrupt        */
     SDIO2_IRQn                  = 60,     /*!< sdio2 global interrupt                               */
-    I2C3_EVT_IRQn               = 61,     /*!< i2c3 event interrupt                                 */
-    I2C3_ERR_IRQn               = 62,     /*!< i2c3 error interrupt                                 */
+    I2C3_EV_IRQn                = 61,     /*!< i2c3 event interrupt                                 */
+    I2C3_ER_IRQn                = 62,     /*!< i2c3 error interrupt                                 */
     SPI4_IRQn                   = 63,     /*!< spi4 global interrupt                                */
     CAN2_TX_IRQn                = 68,     /*!< can2 tx interrupt                                    */
     CAN2_RX0_IRQn               = 69,     /*!< can2 rx0 interrupt                                   */
     CAN2_RX1_IRQn               = 70,     /*!< can2 rx1 interrupt                                   */
-    CAN2_SE_IRQn                = 71,     /*!< can2 se interrupt                                    */
+    CAN2_SCE_IRQn               = 71,     /*!< can2 se interrupt                                    */
     ACC_IRQn                    = 72,     /*!< acc interrupt                                        */
     USBFS_MAPH_IRQn             = 73,     /*!< usb map hp interrupt                                 */
     USBFS_MAPL_IRQn             = 74,     /*!< usb map lp interrupt                                 */
@@ -788,7 +788,7 @@ typedef struct
 #define APB2PERIPH_BASE       (PERIPH_BASE + 0x00010000U)
 #define AHBPERIPH_BASE        (PERIPH_BASE + 0x00020000U)
 
-#define RCC_BASE              (AHBPERIPH_BASE + 0x00001000U)
+#define RCC_BASE              (AHBPERIPH_BASE + 0x00001000U)  //CRM
 #define CRC_BASE              (AHBPERIPH_BASE + 0x00003000U)
 
 /* apb1 bus base address */
@@ -2072,7 +2072,7 @@ typedef struct
 
 /******************************************************************************/
 /*                                                                            */
-/*                General Purpose and Alternate Function I/O                  */ FINISHED
+/*                General Purpose and Alternate Function I/O                  */
 /*                                                                            */
 /******************************************************************************/
 
@@ -3221,7 +3221,7 @@ typedef struct
 
 /******************************************************************************/
 /*                                                                            */
-/*                    External Interrupt/Event Controller                     */ TODO
+/*                    External Interrupt/Event Controller                     */
 /*                                                                            */
 /******************************************************************************/
 
@@ -3709,7 +3709,7 @@ typedef struct
 /******************************************************************************/
 /*                                                                            */
 /*                             DMA Controller                                 */
-/*                                                                            */
+/*                        Flexible DMA Exists but isn't implemented           */
 /******************************************************************************/
 
 /*******************  Bit definition for DMA_ISR register  ********************/
@@ -7702,9 +7702,6 @@ typedef struct
 #define CAN_FMR_FINIT_Pos                    (0U)
 #define CAN_FMR_FINIT_Msk                    (0x1U << CAN_FMR_FINIT_Pos)       /*!< 0x00000001 */
 #define CAN_FMR_FINIT                        CAN_FMR_FINIT_Msk                 /*!< Filter Init Mode */
-#define CAN_FMR_CAN2SB_Pos                   (8U)
-#define CAN_FMR_CAN2SB_Msk                   (0x3FU << CAN_FMR_CAN2SB_Pos)     /*!< 0x00003F00 */
-#define CAN_FMR_CAN2SB                       CAN_FMR_CAN2SB_Msk                /*!< CAN2 start bank */
 
 /*******************  Bit definition for CAN_FM1R register  *******************/
 #define CAN_FM1R_FBM_Pos                     (0U)
@@ -10664,6 +10661,8 @@ typedef struct
 #define SPI_CR1_BR_0                        (0x1U << SPI_CR1_BR_Pos)           /*!< 0x00000008 */
 #define SPI_CR1_BR_1                        (0x2U << SPI_CR1_BR_Pos)           /*!< 0x00000010 */
 #define SPI_CR1_BR_2                        (0x4U << SPI_CR1_BR_Pos)           /*!< 0x00000020 */
+// from SPI_CR2 Register but it is the MSB of SPI_CR1_BR
+#define SPI_CR1_BR_3                        (0x1U << 8)                        /*!< 0x0000100 */
 
 #define SPI_CR1_SPE_Pos                     (6U)
 #define SPI_CR1_SPE_Msk                     (0x1U << SPI_CR1_SPE_Pos)          /*!< 0x00000040 */
@@ -11074,7 +11073,7 @@ typedef struct
 #define USART_BRR_DIV_Fraction_Msk          (0xFU << USART_BRR_DIV_Fraction_Pos) /*!< 0x0000000F */
 #define USART_BRR_DIV_Fraction              USART_BRR_DIV_Fraction_Msk         /*!< Fraction of USARTDIV */
 #define USART_BRR_DIV_Mantissa_Pos          (4U)
-#define USART_BRR_DIV_Mantissa_Msk          (0xFFFU << USART_BRR_DIV_Mantissa_Pos) /*!< 0x0000FFF0 */
+#define USART_BRR_DIV_Mantissa_Msk          (0x3FFFU << USART_BRR_DIV_Mantissa_Pos) /*!< 0x0003FFF0 */
 #define USART_BRR_DIV_Mantissa              USART_BRR_DIV_Mantissa_Msk         /*!< Mantissa of USARTDIV */
 
 /******************  Bit definition for USART_CR1 register  *******************/
@@ -11296,6 +11295,15 @@ typedef struct
 #define DBGMCU_CR_DBG_TIM7_STOP_Pos         (20U)
 #define DBGMCU_CR_DBG_TIM7_STOP_Msk         (0x1U << DBGMCU_CR_DBG_TIM7_STOP_Pos) /*!< 0x00100000 */
 #define DBGMCU_CR_DBG_TIM7_STOP             DBGMCU_CR_DBG_TIM7_STOP_Msk        /*!< TIM7 counter stopped when core is halted */
+#define DBGMCU_CR_DBG_TIM9_STOP_Pos         (28U)
+#define DBGMCU_CR_DBG_TIM9_STOP_Msk         (0x1U << DBGMCU_CR_DBG_TIM9_STOP_Pos) /*!< 0x10000000 */
+#define DBGMCU_CR_DBG_TIM9_STOP             DBGMCU_CR_DBG_TIM9_STOP_Msk        /*!< TIM9 counter stopped when core is halted */
+#define DBGMCU_CR_DBG_TIM10_STOP_Pos        (29U)
+#define DBGMCU_CR_DBG_TIM10_STOP_Msk        (0x1U << DBGMCU_CR_DBG_TIM10_STOP_Pos) /*!< 0x20000000 */
+#define DBGMCU_CR_DBG_TIM10_STOP            DBGMCU_CR_DBG_TIM10_STOP_Msk        /*!< TIM10 counter stopped when core is halted */
+#define DBGMCU_CR_DBG_TIM11_STOP_Pos        (30U)
+#define DBGMCU_CR_DBG_TIM11_STOP_Msk        (0x1U << DBGMCU_CR_DBG_TIM11_STOP_Pos) /*!< 0x40000000 */
+#define DBGMCU_CR_DBG_TIM11_STOP            DBGMCU_CR_DBG_TIM11_STOP_Msk        /*!< TIM11 counter stopped when core is halted */
 
 /******************************************************************************/
 /*                                                                            */
@@ -11519,7 +11527,8 @@ typedef struct
                                                   ((INSTANCE) == ADC3))
 
 /****************************** CAN Instances *********************************/
-#define IS_CAN_ALL_INSTANCE(INSTANCE) ((INSTANCE) == CAN1)
+#define IS_CAN_ALL_INSTANCE(INSTANCE) ((INSTANCE) == CAN1 || \
+                                       (INSTANCE) == CAN2)
 
 /****************************** CRC Instances *********************************/
 #define IS_CRC_ALL_INSTANCE(INSTANCE) ((INSTANCE) == CRC)
@@ -11573,7 +11582,8 @@ typedef struct
 #define IS_IWDG_ALL_INSTANCE(INSTANCE)  ((INSTANCE) == IWDG)
 
 /****************************** SDIO Instances *********************************/
-#define IS_SDIO_ALL_INSTANCE(INSTANCE) ((INSTANCE) == SDIO)
+#define IS_SDIO_ALL_INSTANCE(INSTANCE) (((INSTANCE) == SDIO) || \
+                                        ((INSTANCE) == SDIO2))
 
 /******************************** SPI Instances *******************************/
 #define IS_SPI_ALL_INSTANCE(INSTANCE) (((INSTANCE) == SPI1) || \
@@ -11590,7 +11600,13 @@ typedef struct
    ((INSTANCE) == TIM4)    || \
    ((INSTANCE) == TIM5)    || \
    ((INSTANCE) == TIM6)    || \
-   ((INSTANCE) == TIM7))
+   ((INSTANCE) == TIM7)    || \
+   ((INSTANCE) == TIM9)    || \
+   ((INSTANCE) == TIM10)   || \
+   ((INSTANCE) == TIM11)   || \
+   ((INSTANCE) == TIM12)   || \
+   ((INSTANCE) == TIM13)   || \
+   ((INSTANCE) == TIM14))
 
 #define IS_TIM_ADVANCED_INSTANCE(INSTANCE)\
   (((INSTANCE) == TIM1)    || \
@@ -11602,7 +11618,13 @@ typedef struct
    ((INSTANCE) == TIM2)    || \
    ((INSTANCE) == TIM3)    || \
    ((INSTANCE) == TIM4)    || \
-   ((INSTANCE) == TIM5))
+   ((INSTANCE) == TIM5)    || \
+   ((INSTANCE) == TIM9)    || \
+   ((INSTANCE) == TIM10)   || \
+   ((INSTANCE) == TIM11)   || \
+   ((INSTANCE) == TIM12)   || \
+   ((INSTANCE) == TIM13)   || \
+   ((INSTANCE) == TIM14))
 
 #define IS_TIM_CC2_INSTANCE(INSTANCE)\
   (((INSTANCE) == TIM1)    || \
@@ -11650,6 +11672,8 @@ typedef struct
    ((INSTANCE) == TIM2)    || \
    ((INSTANCE) == TIM3)    || \
    ((INSTANCE) == TIM4)    || \
+   ((INSTANCE) == TIM9)    || \
+   ((INSTANCE) == TIM12)   || \
    ((INSTANCE) == TIM5))
 
 #define IS_TIM_CLOCKSOURCE_ITRX_INSTANCE(INSTANCE)\
@@ -11658,6 +11682,8 @@ typedef struct
    ((INSTANCE) == TIM2)    || \
    ((INSTANCE) == TIM3)    || \
    ((INSTANCE) == TIM4)    || \
+   ((INSTANCE) == TIM9)    || \
+   ((INSTANCE) == TIM12)   || \
    ((INSTANCE) == TIM5))
 
 #define IS_TIM_OCXREF_CLEAR_INSTANCE(INSTANCE)\
@@ -11666,6 +11692,12 @@ typedef struct
    ((INSTANCE) == TIM2)    || \
    ((INSTANCE) == TIM3)    || \
    ((INSTANCE) == TIM4)    || \
+   ((INSTANCE) == TIM9)    || \
+   ((INSTANCE) == TIM10)   || \
+   ((INSTANCE) == TIM11)   || \
+   ((INSTANCE) == TIM12)   || \
+   ((INSTANCE) == TIM13)   || \
+   ((INSTANCE) == TIM14)   || \
    ((INSTANCE) == TIM5))
 
 #define IS_TIM_ENCODER_INTERFACE_INSTANCE(INSTANCE)\
@@ -11700,6 +11732,12 @@ typedef struct
    ((INSTANCE) == TIM2)    || \
    ((INSTANCE) == TIM3)    || \
    ((INSTANCE) == TIM4)    || \
+   ((INSTANCE) == TIM9)    || \
+   ((INSTANCE) == TIM10)   || \
+   ((INSTANCE) == TIM11)   || \
+   ((INSTANCE) == TIM12)   || \
+   ((INSTANCE) == TIM13)   || \
+   ((INSTANCE) == TIM14)   || \
    ((INSTANCE) == TIM5))
 
 #define IS_TIM_DMABURST_INSTANCE(INSTANCE)\
@@ -11749,7 +11787,27 @@ typedef struct
      (((CHANNEL) == TIM_CHANNEL_1) ||          \
       ((CHANNEL) == TIM_CHANNEL_2) ||          \
       ((CHANNEL) == TIM_CHANNEL_3) ||          \
-      ((CHANNEL) == TIM_CHANNEL_4))))
+      ((CHANNEL) == TIM_CHANNEL_4)))           \
+    ||                                         \
+    (((INSTANCE) == TIM9) &&                   \
+     (((CHANNEL) == TIM_CHANNEL_1) ||          \
+      ((CHANNEL) == TIM_CHANNEL_2)))           \
+    ||                                         \
+    (((INSTANCE) == TIM12) &&                  \
+     (((CHANNEL) == TIM_CHANNEL_1) ||          \
+      ((CHANNEL) == TIM_CHANNEL_2)))           \
+    ||                                         \
+    (((INSTANCE) == TIM10) &&                  \
+     (((CHANNEL) == TIM_CHANNEL_1)))           \
+    ||                                         \
+    (((INSTANCE) == TIM11) &&                  \
+     (((CHANNEL) == TIM_CHANNEL_1)))           \
+    ||                                         \
+    (((INSTANCE) == TIM13) &&                  \
+     (((CHANNEL) == TIM_CHANNEL_1)))           \
+    ||                                         \
+    (((INSTANCE) == TIM14) &&                  \
+     (((CHANNEL) == TIM_CHANNEL_1))))
 
 #define IS_TIM_CCXN_INSTANCE(INSTANCE, CHANNEL) \
    ((((INSTANCE) == TIM1) &&                    \
@@ -11826,28 +11884,38 @@ typedef struct
 /******************** USART Instances : Synchronous mode **********************/
 #define IS_USART_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
                                      ((INSTANCE) == USART2) || \
-                                     ((INSTANCE) == USART3))
+                                     ((INSTANCE) == USART3) || \
+                                     ((INSTANCE) == USART6))
 
 /******************** UART Instances : Asynchronous mode **********************/
 #define IS_UART_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
                                     ((INSTANCE) == USART2) || \
                                     ((INSTANCE) == USART3) || \
                                     ((INSTANCE) == UART4)  || \
-                                    ((INSTANCE) == UART5))
+                                    ((INSTANCE) == UART5)  || \
+                                    ((INSTANCE) == USART6) || \
+                                    ((INSTANCE) == UART7)  || \
+                                    ((INSTANCE) == UART8))
 
 /******************** UART Instances : Half-Duplex mode **********************/
 #define IS_UART_HALFDUPLEX_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
                                                ((INSTANCE) == USART2) || \
                                                ((INSTANCE) == USART3) || \
                                                ((INSTANCE) == UART4)  || \
-                                               ((INSTANCE) == UART5))
+                                               ((INSTANCE) == UART5)  || \
+                                               ((INSTANCE) == USART6) || \
+                                               ((INSTANCE) == UART7)  || \
+                                               ((INSTANCE) == UART8))
 
 /******************** UART Instances : LIN mode **********************/
 #define IS_UART_LIN_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
                                         ((INSTANCE) == USART2) || \
                                         ((INSTANCE) == USART3) || \
                                         ((INSTANCE) == UART4)  || \
-                                        ((INSTANCE) == UART5))
+                                        ((INSTANCE) == UART5)  || \
+                                        ((INSTANCE) == USART6) || \
+                                        ((INSTANCE) == UART7)  || \
+                                        ((INSTANCE) == UART8))
 
 /****************** UART Instances : Hardware Flow control ********************/
 #define IS_UART_HWFLOW_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
@@ -11864,20 +11932,28 @@ typedef struct
                                     ((INSTANCE) == USART2) || \
                                     ((INSTANCE) == USART3) || \
                                     ((INSTANCE) == UART4)  || \
-                                    ((INSTANCE) == UART5))
-
+                                    ((INSTANCE) == UART5)  || \
+                                    ((INSTANCE) == USART6) || \
+                                    ((INSTANCE) == UART7)  || \
+                                    ((INSTANCE) == UART8))
 /***************** UART Instances : Multi-Processor mode **********************/
 #define IS_UART_MULTIPROCESSOR_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
                                                    ((INSTANCE) == USART2) || \
                                                    ((INSTANCE) == USART3) || \
                                                    ((INSTANCE) == UART4)  || \
-                                                   ((INSTANCE) == UART5))
+                                                   ((INSTANCE) == UART5)  || \
+                                                   ((INSTANCE) == USART6) || \
+                                                   ((INSTANCE) == UART7)  || \
+                                                   ((INSTANCE) == UART8))
 
 /***************** UART Instances : DMA mode available **********************/
 #define IS_UART_DMA_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
                                         ((INSTANCE) == USART2) || \
                                         ((INSTANCE) == USART3) || \
-                                        ((INSTANCE) == UART4))
+                                        ((INSTANCE) == UART4)  || \
+                                        ((INSTANCE) == USART6) || \
+                                        ((INSTANCE) == UART7)  || \
+                                        ((INSTANCE) == UART8))
 
 /****************************** RTC Instances *********************************/
 #define IS_RTC_ALL_INSTANCE(INSTANCE)  ((INSTANCE) == RTC)
