@@ -15,10 +15,10 @@
 */
 
 /**
- * @file    STM32F1xx/stm32_isr.c
- * @brief   STM32F1xx ISR handler code.
+ * @file    AT32F403Axx/AT32_isr.c
+ * @brief   AT32F403Axx ISR handler code.
  *
- * @addtogroup STM32F1xx_ISR
+ * @addtogroup AT32F403Axx_ISR
  * @{
  */
 
@@ -52,7 +52,7 @@
 /*===========================================================================*/
 
 #if (HAL_USE_PAL && (PAL_USE_WAIT || PAL_USE_CALLBACKS)) || defined(__DOXYGEN__)
-#if !defined(STM32_DISABLE_EXTI0_HANDLER)
+#if !defined(AT32_DISABLE_EXTI0_HANDLER)
 /**
  * @brief   EXTI[0] interrupt handler.
  *
@@ -73,7 +73,7 @@ OSAL_IRQ_HANDLER(Vector58) {
 }
 #endif
 
-#if !defined(STM32_DISABLE_EXTI1_HANDLER)
+#if !defined(AT32_DISABLE_EXTI1_HANDLER)
 /**
  * @brief   EXTI[1] interrupt handler.
  *
@@ -94,7 +94,7 @@ OSAL_IRQ_HANDLER(Vector5C) {
 }
 #endif
 
-#if !defined(STM32_DISABLE_EXTI2_HANDLER)
+#if !defined(AT32_DISABLE_EXTI2_HANDLER)
 /**
  * @brief   EXTI[2] interrupt handler.
  *
@@ -115,7 +115,7 @@ OSAL_IRQ_HANDLER(Vector60) {
 }
 #endif
 
-#if !defined(STM32_DISABLE_EXTI3_HANDLER)
+#if !defined(AT32_DISABLE_EXTI3_HANDLER)
 /**
  * @brief   EXTI[3] interrupt handler.
  *
@@ -136,7 +136,7 @@ OSAL_IRQ_HANDLER(Vector64) {
 }
 #endif
 
-#if !defined(STM32_DISABLE_EXTI4_HANDLER)
+#if !defined(AT32_DISABLE_EXTI4_HANDLER)
 /**
  * @brief   EXTI[4] interrupt handler.
  *
@@ -157,7 +157,7 @@ OSAL_IRQ_HANDLER(Vector68) {
 }
 #endif
 
-#if !defined(STM32_DISABLE_EXTI5_9_HANDLER)
+#if !defined(AT32_DISABLE_EXTI5_9_HANDLER)
 /**
  * @brief   EXTI[5]...EXTI[9] interrupt handler.
  *
@@ -183,7 +183,7 @@ OSAL_IRQ_HANDLER(Vector9C) {
 }
 #endif
 
-#if !defined(STM32_DISABLE_EXTI10_15_HANDLER)
+#if !defined(AT32_DISABLE_EXTI10_15_HANDLER)
 /**
  * @brief   EXTI[10]...EXTI[15] interrupt handler.
  *
@@ -224,13 +224,13 @@ OSAL_IRQ_HANDLER(VectorE0) {
 void irqInit(void) {
 
 #if HAL_USE_PAL
-  nvicEnableVector(EXTI0_IRQn, STM32_IRQ_EXTI0_PRIORITY);
-  nvicEnableVector(EXTI1_IRQn, STM32_IRQ_EXTI1_PRIORITY);
-  nvicEnableVector(EXTI2_IRQn, STM32_IRQ_EXTI2_PRIORITY);
-  nvicEnableVector(EXTI3_IRQn, STM32_IRQ_EXTI3_PRIORITY);
-  nvicEnableVector(EXTI4_IRQn, STM32_IRQ_EXTI4_PRIORITY);
-  nvicEnableVector(EXTI9_5_IRQn, STM32_IRQ_EXTI5_9_PRIORITY);
-  nvicEnableVector(EXTI15_10_IRQn, STM32_IRQ_EXTI10_15_PRIORITY);
+  nvicEnableVector(EXTI0_IRQn, AT32_IRQ_EXTI0_PRIORITY);
+  nvicEnableVector(EXTI1_IRQn, AT32_IRQ_EXTI1_PRIORITY);
+  nvicEnableVector(EXTI2_IRQn, AT32_IRQ_EXTI2_PRIORITY);
+  nvicEnableVector(EXTI3_IRQn, AT32_IRQ_EXTI3_PRIORITY);
+  nvicEnableVector(EXTI4_IRQn, AT32_IRQ_EXTI4_PRIORITY);
+  nvicEnableVector(EXTI9_5_IRQn, AT32_IRQ_EXTI5_9_PRIORITY);
+  nvicEnableVector(EXTI15_10_IRQn, AT32_IRQ_EXTI10_15_PRIORITY);
 #endif
 }
 
