@@ -174,6 +174,11 @@
 #define AT32_I2C2_EVENT_NUMBER     33
 #define AT32_I2C2_ERROR_NUMBER     34
 
+#define AT32_I2C3_EVENT_HANDLER    Vector134
+#define AT32_I2C3_ERROR_HANDLER    Vector138
+#define AT32_I2C3_EVENT_NUMBER     61
+#define AT32_I2C3_ERROR_NUMBER     62
+
 /*
  * SPI units.
  */
@@ -279,6 +284,12 @@
 #define AT32_USB1_HP_NUMBER        19
 #define AT32_USB1_LP_NUMBER        20
 #define AT32_USBP1_WKUP_NUMBER     42
+
+/* FSMC attributes.*/
+#define STM32_HAS_FSMC                      TRUE
+#define STM32_FSMC_IS_FMC                   FALSE
+#define STM32_FSMC_HANDLER                  Vector100
+#define STM32_FSMC_NUMBER                   48
 
 /** @} */
 

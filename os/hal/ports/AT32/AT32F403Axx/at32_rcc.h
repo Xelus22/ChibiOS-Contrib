@@ -15,17 +15,17 @@
 */
 
 /**
- * @file    STM32F1xx/stm32_rcc.h
+ * @file    AT32F403Axx/at32_rcc.h
  * @brief   RCC helper driver header.
  * @note    This file requires definitions from the ST header file
- *          @p stm32f10x.h.
+ *          @p at32f403axx.h.
  *
- * @addtogroup STM32F1xx_RCC
+ * @addtogroup AT32F403Axx_RCC
  * @{
  */
 
-#ifndef STM32_RCC_H
-#define STM32_RCC_H
+#ifndef AT32_RCC_H
+#define AT32_RCC_H
 
 /*===========================================================================*/
 /* Driver constants.                                                         */
@@ -199,6 +199,54 @@
  * @api
  */
 #define rccResetADC1() rccResetAPB2(RCC_APB2RSTR_ADC1RST)
+
+/**
+ * @brief   Enables the ADC2 peripheral clock.
+ * @note    The @p lp parameter is ignored in this family.
+ *
+ * @param[in] lp        low power enable flag
+ *
+ * @api
+ */
+#define rccEnableADC1(lp) rccEnableAPB2(RCC_APB2ENR_ADC2EN, lp)
+
+/**
+ * @brief   Disables the ADC2 peripheral clock.
+ *
+ * @api
+ */
+#define rccDisableADC1() rccDisableAPB2(RCC_APB2ENR_ADC2EN)
+
+/**
+ * @brief   Resets the ADC2 peripheral.
+ *
+ * @api
+ */
+#define rccResetADC1() rccResetAPB2(RCC_APB2RSTR_ADC2RST)
+
+/**
+ * @brief   Enables the ADC3 peripheral clock.
+ * @note    The @p lp parameter is ignored in this family.
+ *
+ * @param[in] lp        low power enable flag
+ *
+ * @api
+ */
+#define rccEnableADC1(lp) rccEnableAPB2(RCC_APB2ENR_ADC3EN, lp)
+
+/**
+ * @brief   Disables the ADC2 peripheral clock.
+ *
+ * @api
+ */
+#define rccDisableADC1() rccDisableAPB2(RCC_APB2ENR_ADC3EN)
+
+/**
+ * @brief   Resets the ADC2 peripheral.
+ *
+ * @api
+ */
+#define rccResetADC1() rccResetAPB2(RCC_APB2RSTR_ADC3RST)
 /** @} */
 
 /**
@@ -1225,6 +1273,6 @@ extern "C" {
 }
 #endif
 
-#endif /* STM32_RCC_H */
+#endif /* AT32_RCC_H */
 
 /** @} */

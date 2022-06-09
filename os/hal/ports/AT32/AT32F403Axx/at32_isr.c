@@ -210,7 +210,19 @@ OSAL_IRQ_HANDLER(VectorE0) {
 }
 #endif
 
+#include "at32_tim1_9_10_11.inc"
+#include "at32_tim2.inc"
+#include "at32_tim3.inc"
+#include "at32_tim4.inc"
+#include "at32_tim5.inc"
+#include "at32_tim6.inc"
+#include "at32_tim7.inc"
+#include "at32_tim8.inc"
+#include "at32_tim12.inc"
+#include "at32_tim13.inc"
+#include "at32_tim14.inc"
 #endif /* HAL_USE_PAL */
+
 
 /*===========================================================================*/
 /* Driver exported functions.                                                */

@@ -42,6 +42,11 @@
 #define AT32_HAS_ADC1                      TRUE
 #define AT32_HAS_ADC2                      TRUE
 #define AT32_HAS_ADC3                      TRUE
+#define AT32_HAS_ADC4                      FALSE
+
+#define AT32_HAS_SDADC1                    FALSE
+#define AT32_HAS_SDADC2                    FALSE
+#define AT32_HAS_SDADC3                    FALSE
 
 /* CAN attributes.*/
 #define AT32_HAS_CAN1                      TRUE
@@ -81,17 +86,26 @@
 #define AT32_DMA1_CH6_NUMBER               16
 #define AT32_DMA1_CH7_NUMBER               17
 
-#define AT32_DMA2_NUM_CHANNELS             5
-#define AT32_DMA2_CH1_HANDLER              Vector120
-#define AT32_DMA2_CH2_HANDLER              Vector124
-#define AT32_DMA2_CH3_HANDLER              Vector128
-#define AT32_DMA2_CH4_HANDLER              Vector12C
-#define AT32_DMA2_CH5_HANDLER              Vector130
-#define AT32_DMA2_CH1_NUMBER               56
-#define AT32_DMA2_CH2_NUMBER               57
-#define AT32_DMA2_CH3_NUMBER               58
-#define AT32_DMA2_CH4_NUMBER               59
-#define AT32_DMA2_CH5_NUMBER               59
+#define STM32_DMA2_NUM_CHANNELS             7
+#define STM32_DMA2_CH1_HANDLER              Vector120
+#define STM32_DMA2_CH2_HANDLER              Vector124
+#define STM32_DMA2_CH3_HANDLER              Vector128
+#define STM32_DMA2_CH45_HANDLER             Vector12C
+#define STM32_DMA2_CH67_HANDLER             Vector16C
+#define STM32_DMA2_CH1_NUMBER               56
+#define STM32_DMA2_CH2_NUMBER               57
+#define STM32_DMA2_CH3_NUMBER               58
+#define STM32_DMA2_CH45_NUMBER              59
+#define STM32_DMA2_CH67_NUMBER              75
+
+#define STM32_DMA2_CH4_NUMBER               STM32_DMA2_CH45_NUMBER
+#define STM32_DMA2_CH5_NUMBER               STM32_DMA2_CH45_NUMBER
+#define STM32_DMA2_CH6_NUMBER               STM32_DMA2_CH67_NUMBER
+#define STM32_DMA2_CH7_NUMBER               STM32_DMA2_CH67_NUMBER
+#define DMA2_CH4_CMASK                      0x00000C00U
+#define DMA2_CH5_CMASK                      0x00000C00U
+#define DMA2_CH6_CMASK                      0x00003000U
+#define DMA2_CH7_CMASK                      0x00003000U
 
 /* ETH attributes.*/
 #define AT32_HAS_ETH                       FALSE
@@ -133,9 +147,12 @@
 #define AT32_RTC_IS_CALENDAR               FALSE
 
 /* SDIO attributes.*/
+#define AT32_HAS_SDIO                      TRUE
 #define AT32_HAS_SDIO1                     TRUE
+#define AT32_SDC_SDIO_DMA_STREAM           AT32_SDC_SDIO1_DMA_STREAM
 #define AT32_SDC_SDIO1_DMA_STREAM          AT32_DMA_STREAM_ID(2, 4)
 
+// not implemented in driver
 #define AT32_HAS_SDIO2                     TRUE
 #define AT32_SDC_SDIO2_DMA_STREAM          AT32_DMA_STREAM_ID(2, 5)
 
@@ -240,11 +257,23 @@
 #define AT32_UART_UART4_RX_DMA_STREAM      AT32_DMA_STREAM_ID(2, 3)
 #define AT32_UART_UART4_TX_DMA_STREAM      AT32_DMA_STREAM_ID(2, 5)
 
-// no DMA sources unless flexible DMA is enabled
+// no DMA for UART5-8 unless flexible DMA is enabled
+// flexible DMA not implemented
 #define AT32_HAS_UART5                     TRUE
+#define AT32_UART_UART5_RX_DMA_STREAM      AT32_DMA_STREAM_ID(2, 3)
+#define AT32_UART_UART5_TX_DMA_STREAM      AT32_DMA_STREAM_ID(2, 5)
+
 #define AT32_HAS_USART6                    TRUE
+#define AT32_UART_UART6_RX_DMA_STREAM      AT32_DMA_STREAM_ID(2, 3)
+#define AT32_UART_UART6_TX_DMA_STREAM      AT32_DMA_STREAM_ID(2, 5)
+
 #define AT32_HAS_UART7                     TRUE
+#define AT32_UART_UART7_RX_DMA_STREAM      AT32_DMA_STREAM_ID(2, 3)
+#define AT32_UART_UART7_TX_DMA_STREAM      AT32_DMA_STREAM_ID(2, 5)
+
 #define AT32_HAS_UART8                     TRUE
+#define AT32_UART_UART8_RX_DMA_STREAM      AT32_DMA_STREAM_ID(2, 3)
+#define AT32_UART_UART8_TX_DMA_STREAM      AT32_DMA_STREAM_ID(2, 5)
 
 /* USB attributes.*/
 #define AT32_HAS_USB                       TRUE
