@@ -163,6 +163,8 @@
 #define AT32_ADCPRE_DIV4       (1 << 14)   /**< PPRE2 divided by 4.        */
 #define AT32_ADCPRE_DIV6       (2 << 14)   /**< PPRE2 divided by 6.        */
 #define AT32_ADCPRE_DIV8       (3 << 14)   /**< PPRE2 divided by 8.        */
+#define AT32_ADCPRE_DIV12      (1<<28)|(1<<14)   /**< PPRE2 divided by 12.       */
+#define AT32_ADCPRE_DIV16      (1<<28)|(3<<14)   /**< PPRE2 divided by 16.       */
 
 #define AT32_PLLSRC_HSI        (0 << 16)   /**< PLL clock source is HSI.   */
 #define AT32_PLLSRC_HSE        (1 << 16)   /**< PLL clock source is HSE.   */
@@ -198,27 +200,27 @@
  * @name    RCC_MISC Additional Register
  * @{
  */
-#define AT32_HSI_SRC_DIV6      (0 << 25)    /**< HSI 6 divider enable 8MHz*/
-#define AT32_HSI_SRC_DIV1      (1 << 25)    /**< HSI outputs undivided clock 48MHz */
-                                            /**< sets HSI_DIV_EN=1  */
+#define AT32_HSISRC_DIV6      (0 << 25)    /**< HSI 6 divider enable 8MHz*/
+#define AT32_HSISRC_DIV1      (1 << 25)    /**< HSI outputs undivided clock 48MHz */
+                                           /**< sets HSI_DIV_EN=1  */
 
 /**
  * @name    RCC_MISC2 Additional Register
  * @{
  */
-#define AT32_USB_SRC_PLL       (0 << 8)     /**< USB clock source is PLL or divider */
-#define AT32_USB_SRC_HSI       (1 << 8)     /**< USB clock source is HSI            */
+#define AT32_USBSRC_PLL        (0 << 8)     /**< USB clock source is PLL or divider */
+#define AT32_USBSRC_HSI        (1 << 8)     /**< USB clock source is HSI            */
                                             /**< HSI_DIV_EN=1 must be guaranteed>   */
 
-#define AT32_HSI_SYS_SRC_HSI_DIV6   (0 << 9)     /**< SCLK HSI source is 8MHz */
-#define AT32_HSI_SYS_SRC_HSI_DIV_EN (1 << 9)     /**< SCLK HSI source is 48MHz or 8MHz   */
-                                                 /**< HSI_DIV_EN=1, 48MHz>   */
+#define AT32_HSI_SYS_CTRL_SEL0   (0 << 9)   /**< SCLK HSI source is 8MHz */
+#define AT32_HSI_SYS_CTRL_SEL1   (1 << 9)   /**< SCLK HSI source is 48MHz or 8MHz   */
+                                            /**< HSI_DIV_EN=1, 48MHz>   */
 
 #define AT32_HSE_PRE_PLL_DIV2  (0 << 12)    /**< HSE clock divide by 2      */
 #define AT32_HSE_PRE_PLL_DIV3  (1 << 12)    /**< HSE clock divide by 3      */
 #define AT32_HSE_PRE_PLL_DIV4  (2 << 12)    /**< HSE clock divide by 4      */
 #define AT32_HSE_PRE_PLL_DIV5  (3 << 12)    /**< HSE clock divide by 5      */
-
+                                            /**< HSE_DIV_CTRL> */
 
 /** @} */
 
@@ -340,8 +342,8 @@
  * @note    The default value is calculated for a 240MHz system clock from
  *          a 48MHz HSI crystal using the PLL.
  */
-#if !defined(AT32_HSI_SYS_SRC) || defined(__DOXYGEN__)
-#define AT32_HSI_SYS_SRC           AT32_HSI_SYS_SRC_HSI_DIV_EN
+#if !defined(AT32_HSI_SYS_CTRL) || defined(__DOXYGEN__)
+#define AT32_HSI_SYS_CTRL           AT32_HSI_SYS_CTRL_SEL1
 #endif
 
 /**
@@ -349,8 +351,17 @@
  * @note    The default value is calculated for a 240MHz system clock from
  *          a 48MHz HSI crystal using the PLL.
  */
-#if !defined(AT32_HSI_SRC) || defined(__DOXYGEN__)
-#define AT32_HSI_SRC           AT32_HSI_SRC_DIV1
+#if !defined(AT32_HSISRC) || defined(__DOXYGEN__)
+#define AT32_HSISRC           AT32_HSISRC_DIV1
+#endif
+
+/**
+ * @brief   Clock source to control USB Clock Source
+ * @note    The default value is calculated for a 240MHz system clock from
+ *          a 48MHz HSI crystal using the PLL.
+ */
+#if !defined(AT32_USBSRC) || defined(__DOXYGEN__)
+#define AT32_USBSRC           AT32_USBSRC_HSI
 #endif
 
 /**
@@ -411,7 +422,7 @@
  * @brief   ADC prescaler value.
  */
 #if !defined(AT32_ADCPRE) || defined(__DOXYGEN__)
-#define AT32_ADCPRE                AT32_ADCPRE_DIV4
+#define AT32_ADCPRE                AT32_ADCPRE_DIV16
 #endif
 
 /**
@@ -573,7 +584,11 @@
  */
 #if ((AT32_PLLMUL_VALUE >= 2) && (AT32_PLLMUL_VALUE <= 64)) ||            \
     defined(__DOXYGEN__)
+#if (AT32_PLLMUL_VALUE <= 16)
 #define AT32_PLLMUL                ((AT32_PLLMUL_VALUE - 2) << 18)
+#else
+#define AT32_PLLMUL                ((AT32_PLLMUL_VALUE - 1) << 18)
+#endif
 #else
 #error "invalid AT32_PLLMUL_VALUE value specified"
 #endif
@@ -620,18 +635,18 @@
  * @brief   HSI clock source out to Sys Clock
  * @note    Controlled by HSI_DIV_EN and HSI_SYS_CTRL
  */
-#if (AT32_HSI_SYS_SRC == AT32_HSI_SYS_SRC_HSI_DIV_EN)
-    #if (AT32_HSI_SRC == AT32_HSI_SRC_DIV1)
-    #define AT32_HSI_SYS_CLK            AT32_HSICLK
-    #elif (AT32_HSI_SRC == AT32_HSI_SRC_DIV6)
-    #define AT32_HSI_SYS_CLK            (AT32_HSICLK / 6)
-    #else
-    #error "invalid AT32_HSI_SRC value specified"
-    #endif
-#elif (AT32_HSI_SYS_SRC == AT32_HSI_SYS_SRC_HSI_DIV6)
+#if (AT32_HSI_SYS_CTRL == AT32_HSI_SYS_CTRL_SEL1)
+#if (AT32_HSISRC == AT32_HSISRC_DIV1)
+#define AT32_HSI_SYS_CLK            AT32_HSICLK
+#elif (AT32_HSISRC == AT32_HSISRC_DIV6)
 #define AT32_HSI_SYS_CLK            (AT32_HSICLK / 6)
+#else
+#error "invalid AT32_HSISRC value specified"
+#endif
+#elif (AT32_HSI_SYS_CTRL == AT32_HSI_SYS_CTRL_SEL0)
+#define AT32_HSI_SYS_CLK                (AT32_HSICLK / 6)
 #else 
-#error "invalid AT32_HSI_SYS_SRC value specified"
+#error "invalid AT32_HSI_SYS_CTRL value specified"
 #endif
 
 
@@ -753,24 +768,49 @@
 #define AT32_ADCCLK                (AT32_PCLK2 / 6)
 #elif AT32_ADCPRE == AT32_ADCPRE_DIV8
 #define AT32_ADCCLK                (AT32_PCLK2 / 8)
+#elif AT32_ADCPRE == AT32_ADCPRE_DIV12
+#define AT32_ADCCLK                (AT32_PCLK2 / 12)
+#elif AT32_ADCPRE == AT32_ADCPRE_DIV16
+#define AT32_ADCCLK                (AT32_PCLK2 / 16)
 #else
 #error "invalid AT32_ADCPRE value specified"
 #endif
 
 /* ADC frequency check.*/
 #if AT32_ADCCLK > AT32_ADCCLK_MAX
+#define XSTR(x) STR(x)
+#define STR(x) #x
+#pragma message "pclk2" XSTR(AT32_PCLK2)
+#pragma message "adcpre" XSTR(AT32_ADCPRE)
+#pragma message "adcclk" XSTR(AT32_ADCCLK)
+#pragma message "adcclkmax" XSTR(AT32_ADCCLK_MAX)
 #error "AT32_ADCCLK exceeding maximum frequency (AT32_ADCCLK_MAX)"
 #endif
 
 /**
  * @brief   USB frequency.
  */
+#if(AT32_USBSRC == AT32_USBSRC_HSI)
+//checks
+#if (AT32_HSISRC != AT32_HSISRC_DIV1)
+#error "AT32_HSISRC must equal AT32_HSISRC_DIV1 if using HSI for USBSRC"
+#else
+#define AT32_USBCLK                AT32_HSICLK
+#endif
+#elif (AT32_USBSRC == AT32_USBSRC_PLL)
 #if (AT32_USBPRE == AT32_USBPRE_DIV1P5) || defined(__DOXYGEN__)
 #define AT32_USBCLK                ((AT32_PLLCLKOUT * 2) / 3)
 #elif (AT32_USBPRE == AT32_USBPRE_DIV1)
 #define AT32_USBCLK                AT32_PLLCLKOUT
+#elif (AT32_USBPRE == AT32_USBPRE_DIV2P5)
+#define AT32_USBCLK                ((AT32_PLLCLKOUT * 5) /2)
+#elif (AT32_USBPRE == AT32_USBPRE_DIV2)
+#define AT32_USBCLK                (AT32_PLLCLKOUT/2)
 #else
 #error "invalid AT32_USBPRE value specified"
+#endif
+#else
+#error "invalid AT32_USBSRC value specified"
 #endif
 
 /**

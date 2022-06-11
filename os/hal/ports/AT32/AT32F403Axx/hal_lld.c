@@ -183,9 +183,7 @@ void hal_lld_init(void) {
  *
  * @special
  */
-#if defined(AT32F10X_LD) || defined(AT32F10X_LD_VL) ||                    \
-    defined(AT32F10X_MD) || defined(AT32F10X_MD_VL) ||                    \
-    defined(AT32F10X_HD) || defined(AT32F10X_XL) ||                       \
+#if defined(AT32F403Axx) ||                 \
     defined(__DOXYGEN__)
 /*
  * Clocks initialization for all sub-families except CL.
@@ -234,6 +232,10 @@ void AT32_clock_init(void) {
   RCC->CFGR = AT32_MCOSEL | AT32_USBPRE | AT32_PLLMUL | AT32_PLLXTPRE |
               AT32_PLLSRC | AT32_ADCPRE | AT32_PPRE2  | AT32_PPRE1    |
               AT32_HPRE;
+#if (AT32_USBSRC == AT32_USBSRC_HSI)
+  RCC->MISC = AT32_USBSRC
+  RCC->MISC2 = AT32_HSISRC
+#endif
 #else
   RCC->CFGR = AT32_MCOSEL |                AT32_PLLMUL | AT32_PLLXTPRE |
               AT32_PLLSRC | AT32_ADCPRE | AT32_PPRE2  | AT32_PPRE1    |
