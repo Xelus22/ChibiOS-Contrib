@@ -86,22 +86,22 @@
 #define AT32_DMA1_CH6_NUMBER               16
 #define AT32_DMA1_CH7_NUMBER               17
 
-#define STM32_DMA2_NUM_CHANNELS             7
-#define STM32_DMA2_CH1_HANDLER              Vector120
-#define STM32_DMA2_CH2_HANDLER              Vector124
-#define STM32_DMA2_CH3_HANDLER              Vector128
-#define STM32_DMA2_CH45_HANDLER             Vector12C
-#define STM32_DMA2_CH67_HANDLER             Vector16C
-#define STM32_DMA2_CH1_NUMBER               56
-#define STM32_DMA2_CH2_NUMBER               57
-#define STM32_DMA2_CH3_NUMBER               58
-#define STM32_DMA2_CH45_NUMBER              59
-#define STM32_DMA2_CH67_NUMBER              75
+#define AT32_DMA2_NUM_CHANNELS             7
+#define AT32_DMA2_CH1_HANDLER              Vector120
+#define AT32_DMA2_CH2_HANDLER              Vector124
+#define AT32_DMA2_CH3_HANDLER              Vector128
+#define AT32_DMA2_CH45_HANDLER             Vector12C
+#define AT32_DMA2_CH67_HANDLER             Vector16C
+#define AT32_DMA2_CH1_NUMBER               56
+#define AT32_DMA2_CH2_NUMBER               57
+#define AT32_DMA2_CH3_NUMBER               58
+#define AT32_DMA2_CH45_NUMBER              59
+#define AT32_DMA2_CH67_NUMBER              75
 
-#define STM32_DMA2_CH4_NUMBER               STM32_DMA2_CH45_NUMBER
-#define STM32_DMA2_CH5_NUMBER               STM32_DMA2_CH45_NUMBER
-#define STM32_DMA2_CH6_NUMBER               STM32_DMA2_CH67_NUMBER
-#define STM32_DMA2_CH7_NUMBER               STM32_DMA2_CH67_NUMBER
+#define AT32_DMA2_CH4_NUMBER               AT32_DMA2_CH45_NUMBER
+#define AT32_DMA2_CH5_NUMBER               AT32_DMA2_CH45_NUMBER
+#define AT32_DMA2_CH6_NUMBER               AT32_DMA2_CH67_NUMBER
+#define AT32_DMA2_CH7_NUMBER               AT32_DMA2_CH67_NUMBER
 #define DMA2_CH4_CMASK                      0x00000C00U
 #define DMA2_CH5_CMASK                      0x00000C00U
 #define DMA2_CH6_CMASK                      0x00003000U
@@ -138,8 +138,8 @@
 #define AT32_I2C_I2C2_TX_DMA_STREAM        AT32_DMA_STREAM_ID(1, 4)
 
 #define AT32_HAS_I2C3                      TRUE
-#define AT32_I2C_I2C2_RX_DMA_STREAM        AT32_DMA_STREAM_ID(1, 3)
-#define AT32_I2C_I2C2_TX_DMA_STREAM        AT32_DMA_STREAM_ID(1, 2)
+#define AT32_I2C_I2C3_RX_DMA_STREAM        AT32_DMA_STREAM_ID(1, 3)
+#define AT32_I2C_I2C3_TX_DMA_STREAM        AT32_DMA_STREAM_ID(1, 2)
 
 /* RTC attributes.*/
 #define AT32_HAS_RTC                       TRUE

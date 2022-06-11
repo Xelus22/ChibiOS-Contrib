@@ -208,21 +208,21 @@
  *
  * @api
  */
-#define rccEnableADC1(lp) rccEnableAPB2(RCC_APB2ENR_ADC2EN, lp)
+#define rccEnableADC2(lp) rccEnableAPB2(RCC_APB2ENR_ADC2EN, lp)
 
 /**
  * @brief   Disables the ADC2 peripheral clock.
  *
  * @api
  */
-#define rccDisableADC1() rccDisableAPB2(RCC_APB2ENR_ADC2EN)
+#define rccDisableADC2() rccDisableAPB2(RCC_APB2ENR_ADC2EN)
 
 /**
  * @brief   Resets the ADC2 peripheral.
  *
  * @api
  */
-#define rccResetADC1() rccResetAPB2(RCC_APB2RSTR_ADC2RST)
+#define rccResetADC2() rccResetAPB2(RCC_APB2RSTR_ADC2RST)
 
 /**
  * @brief   Enables the ADC3 peripheral clock.
@@ -232,21 +232,21 @@
  *
  * @api
  */
-#define rccEnableADC1(lp) rccEnableAPB2(RCC_APB2ENR_ADC3EN, lp)
+#define rccEnableADC3(lp) rccEnableAPB2(RCC_APB2ENR_ADC3EN, lp)
 
 /**
  * @brief   Disables the ADC2 peripheral clock.
  *
  * @api
  */
-#define rccDisableADC1() rccDisableAPB2(RCC_APB2ENR_ADC3EN)
+#define rccDisableADC3() rccDisableAPB2(RCC_APB2ENR_ADC3EN)
 
 /**
  * @brief   Resets the ADC2 peripheral.
  *
  * @api
  */
-#define rccResetADC1() rccResetAPB2(RCC_APB2RSTR_ADC3RST)
+#define rccResetADC3() rccResetAPB2(RCC_APB2RSTR_ADC3RST)
 /** @} */
 
 /**

@@ -607,6 +607,12 @@ typedef struct
   __IO uint32_t APB1ENR;
   __IO uint32_t BDCR;
   __IO uint32_t CSR;
+  // NEW registers
+  __IO uint32_t AHBRST;
+  __IO uint32_t MISC;
+  __IO uint32_t TEST;
+  __IO uint32_t MISC2;
+  __IO uint32_t INTCTRL;
 
 
 } RCC_TypeDef;
@@ -865,7 +871,6 @@ typedef struct
 #define DMA2_Channel7_BASE               (AHBPERIPH_BASE + 0x0480U)
 #define CRM_BASE                         (AHBPERIPH_BASE + 0x1000U)
 #define FLASH_REG_BASE                   (AHBPERIPH_BASE + 0x2000U)
-#define CRC_BASE                         (AHBPERIPH_BASE + 0x3000U)
 #define SDIO2_BASE                       (AHBPERIPH_BASE + 0x3400U)
 
 #define FSMC_BANK1            (FSMC_BASE)               /*!< FSMC Bank1 base address */
@@ -2068,6 +2073,62 @@ typedef struct
 #define RCC_CSR_LPWRRSTF_Msk                 (0x1U << RCC_CSR_LPWRRSTF_Pos)    /*!< 0x80000000 */
 #define RCC_CSR_LPWRRSTF                     RCC_CSR_LPWRRSTF_Msk              /*!< Low-Power reset flag */
 
+/*******************  Bit definition for RCC_AHBRST register  ********************/
+#define RCC_AHBRST_ETHMACRST_Pos             (14U)
+#define RCC_AHBRST_ETHMACRST_Msk             (0x1U << RCC_AHBRST_ETHMACRST_Pos)/*!< 0x00004000 */
+#define RCC_AHBRST_ETHMACRST                 RCC_AHBRST_ETHMACRST_Msk          /*!< Ethernet MAC reset flag */
+
+/*******************  Bit definition for RCC_MISC register    ********************/
+#define RCC_MISC_HSICAL_KEY_Pos              (0U)
+#define RCC_MISC_HSICAL_KEY_Msk              (0xFFU << RCC_MISC_HSICAL_KEY_Pos)
+#define RCC_MISC_HSICAL_KEY                  RCC_MISC_HSICAL_KEY_Msk           /*!< HSICAL_KEY */
+
+#define RCC_MISC_CLKOUT_Pos                  (16U)
+#define RCC_MISC_CLKOUT_Msk                  (0x1U << RCC_MISC_CLKOUT_Pos)
+#define RCC_MISC_CLKOUT                      RCC_MISC_CLKOUT_Msk
+
+#define RCC_MISC_USB768B_Pos                 (24U)
+#define RCC_MISC_USB768B_Msk                 (0x1U << RCC_MISC_USB768B_Pos)
+#define RCC_MISC_USB768B                     RCC_MISC_USB768B_Msk
+
+#define RCC_MISC_HSI_DVI_EN_Pos              (25U)
+#define RCC_MISC_HSI_DVI_EN_Msk              (0x1U << RCC_MISC_HSI_DVI_EN_Pos)
+#define RCC_MISC_HSI_DVI_EN                  RCC_MISC_HSI_DVI_EN_Msk
+
+#define RCC_MISC_MCOPRE_Pos                  (28U)
+#define RCC_MISC_MCOPRE_Msk                  (0xFU << RCC_MISC_MCOPRE_Pos)
+#define RCC_MISC_MCOPRE                      RCC_MISC_MCOPRE_Msk
+
+/*******************  Bit definition for RCC_TEST register  ********************/
+#define RCC_TEST_MCO2TMR_EN_Pos              (16U)
+#define RCC_TEST_MCO2TMR_EN_Msk              (0x1U << RCC_TEST_MCO2TMR_EN_Pos)
+#define RCC_TEST_MCO2TMR_EN                  RCC_TEST_MCO2TMR_EN_Msk
+
+/*******************  Bit definition for RCC_MISC2 register  ********************/
+#define RCC_MISC2_AUTO_STEP_EN_Pos           (4U)
+#define RCC_MISC2_AUTO_STEP_EN_Msk           (0x3U << RCC_MISC2_AUTO_STEP_EN_Pos)
+#define RCC_MISC2_AUTO_STEP                  RCC_MISC2_AUTO_STEP_EN_Msk
+
+#define RCC_MISC2_HSI_FOR_USB_Pos            (8U)
+#define RCC_MISC2_HSI_FOR_USB_Msk            (0x1U << RCC_MISC2_HSI_FOR_USB_Pos)
+#define RCC_MISC2_HSI_FOR_USB                RCC_MISC2_HSI_FOR_USB_Msk
+
+#define RCC_MISC2_HSI_SYS_CTRL_Pos           (9U)
+#define RCC_MISC2_HSI_SYS_CTRL_Msk           (0x1U << RCC_MISC2_HSI_SYS_CTRL_Pos)
+#define RCC_MISC2_HSI_SYS_CTRL               RCC_MISC2_HSI_SYS_CTRL_Msk
+
+#define RCC_MISC2_HSE_DIV_CTRL_Pos           (12U)
+#define RCC_MISC2_HSE_DIV_CTRL_Msk           (0x3U << RCC_MISC2_HSE_DIV_CTRL_Pos)
+#define RCC_MISC2_HSE_DIV_CTRL               RCC_MISC2_HSE_DIV_CTRL_Msk
+
+#define RCC_MISC2_EMAC_PPS_SEL_Pos           (15U)
+#define RCC_MISC2_EMAC_PPS_SEL_Msk           (0x1U << RCC_MISC2_EMAC_PPS_SEL_Msk)
+#define RCC_MISC2_EMAC_PPS_SEL               RCC_MISC2_EMAC_PPS_SEL_Msk
+
+/*******************  Bit definition for RCC_INTCTRL register  ********************/
+#define RCC_INTCTRL_USB_INT_CTRL_Pos         (0U)
+#define RCC_INTCTRL_USB_INT_CTRL_Msk         (0x1U << RCC_INTCTRL_USB_INT_CTRL_Pos)
+#define RCC_INTCTRL_USB_INT_CTRL             RCC_INTCTRL_USB_INT_CTRL_Msk
 
 
 /******************************************************************************/

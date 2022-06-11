@@ -214,7 +214,7 @@
 #define AT32_SDIO_NUMBER           49
 
 #define AT32_SDIO2_HANDLER         Vector130
-#define AT32_SDIO_NUMBER           60
+#define AT32_SDIO2_NUMBER           60
 
 /*
  * TIM units.

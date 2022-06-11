@@ -22,8 +22,8 @@
  * @{
  */
 
-#ifndef AT32_REGISTRY_H
-#define AT32_REGISTRY_H
+#ifndef _HAL_LLD_H_
+#define _HAL_LLD_H_
 
 #include "at32_registry.h"
 
@@ -808,10 +808,10 @@
 #include "nvic.h"
 #include "cache.h"
 #include "mpu_v7m.h"
-#include "AT32_isr.h"
-#include "AT32_dma.h"
-#include "AT32_rcc.h"
-#include "AT32_tim.h"
+#include "at32_isr.h"
+#include "at32_dma.h"
+#include "at32_rcc.h"
+#include "at32_tim.h"
 
 #ifdef __cplusplus
 extern "C" {
