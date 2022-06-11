@@ -60,7 +60,7 @@
  *
  * @api
  */
-#define rccEnableAPB1(mask, lp) {                                           \
+#define rccEnableAPB1(mask) {                                           \
   RCC->APB1ENR |= (mask);                                                   \
   (void)RCC->APB1ENR;                                                       \
 }
@@ -100,7 +100,7 @@
  *
  * @api
  */
-#define rccEnableAPB2(mask, lp) {                                           \
+#define rccEnableAPB2(mask) {                                           \
   RCC->APB2ENR |= (mask);                                                   \
   (void)RCC->APB2ENR;                                                       \
 }
@@ -140,7 +140,7 @@
  *
  * @api
  */
-#define rccEnableAHB(mask, lp) {                                            \
+#define rccEnableAHB(mask) {                                            \
   RCC->AHBENR |= (mask);                                                    \
   (void)RCC->AHBENR;                                                        \
 }
@@ -184,7 +184,7 @@
  *
  * @api
  */
-#define rccEnableADC1(lp) rccEnableAPB2(RCC_APB2ENR_ADC1EN, lp)
+#define rccEnableADC1(lp) rccEnableAPB2(RCC_APB2ENR_ADC1EN)
 
 /**
  * @brief   Disables the ADC1 peripheral clock.
@@ -208,7 +208,7 @@
  *
  * @api
  */
-#define rccEnableADC2(lp) rccEnableAPB2(RCC_APB2ENR_ADC2EN, lp)
+#define rccEnableADC2(lp) rccEnableAPB2(RCC_APB2ENR_ADC2EN)
 
 /**
  * @brief   Disables the ADC2 peripheral clock.
@@ -232,7 +232,7 @@
  *
  * @api
  */
-#define rccEnableADC3(lp) rccEnableAPB2(RCC_APB2ENR_ADC3EN, lp)
+#define rccEnableADC3(lp) rccEnableAPB2(RCC_APB2ENR_ADC3EN)
 
 /**
  * @brief   Disables the ADC2 peripheral clock.
@@ -260,7 +260,7 @@
  *
  * @api
  */
-#define rccEnableDAC1(lp) rccEnableAPB1(RCC_APB1ENR_DACEN, lp)
+#define rccEnableDAC1(lp) rccEnableAPB1(RCC_APB1ENR_DACEN)
 
 /**
  * @brief   Disables the DAC1 peripheral clock.
@@ -289,7 +289,7 @@
  *
  * @api
  */
-#define rccEnableBKPInterface(lp) rccEnableAPB1((RCC_APB1ENR_BKPEN), lp)
+#define rccEnableBKPInterface(lp) rccEnableAPB1((RCC_APB1ENR_BKPEN))
 
 /**
  * @brief   Disables BKP interface clock.
@@ -325,7 +325,7 @@
  *
  * @api
  */
-#define rccEnablePWRInterface(lp) rccEnableAPB1(RCC_APB1ENR_PWREN, lp)
+#define rccEnablePWRInterface(lp) rccEnableAPB1(RCC_APB1ENR_PWREN)
 
 /**
  * @brief   Disables PWR interface clock.
@@ -354,7 +354,7 @@
  *
  * @api
  */
-#define rccEnableCAN1(lp) rccEnableAPB1(RCC_APB1ENR_CAN1EN, lp)
+#define rccEnableCAN1(lp) rccEnableAPB1(RCC_APB1ENR_CAN1EN)
 
 /**
  * @brief   Disables the CAN1 peripheral clock.
@@ -377,7 +377,7 @@
  *
  * @api
  */
-#define rccEnableCAN2(lp) rccEnableAPB1(RCC_APB1ENR_CAN2EN, lp)
+#define rccEnableCAN2(lp) rccEnableAPB1(RCC_APB1ENR_CAN2EN)
 
 /**
  * @brief   Disables the CAN2 peripheral clock.
@@ -406,7 +406,7 @@
  *
  * @api
  */
-#define rccEnableDMA1(lp) rccEnableAHB(RCC_AHBENR_DMA1EN, lp)
+#define rccEnableDMA1(lp) rccEnableAHB(RCC_AHBENR_DMA1EN)
 
 /**
  * @brief   Disables the DMA1 peripheral clock.
@@ -431,7 +431,7 @@
  *
  * @api
  */
-#define rccEnableDMA2(lp) rccEnableAHB(RCC_AHBENR_DMA2EN, lp)
+#define rccEnableDMA2(lp) rccEnableAHB(RCC_AHBENR_DMA2EN)
 
 /**
  * @brief   Disables the DMA2 peripheral clock.
@@ -463,7 +463,7 @@
  */
 #define rccEnableETH(lp) rccEnableAHB(RCC_AHBENR_ETHMACEN |                 \
                                       RCC_AHBENR_ETHMACTXEN |               \
-                                      RCC_AHBENR_ETHMACRXEN, lp)
+                                      RCC_AHBENR_ETHMACRXEN)
 
 /**
  * @brief   Disables the ETH peripheral clock.
@@ -497,7 +497,7 @@
  *
  * @api
  */
-#define rccEnableI2C1(lp) rccEnableAPB1(RCC_APB1ENR_I2C1EN, lp)
+#define rccEnableI2C1(lp) rccEnableAPB1(RCC_APB1ENR_I2C1EN)
 
 /**
  * @brief   Disables the I2C1 peripheral clock.
@@ -521,7 +521,7 @@
  *
  * @api
  */
-#define rccEnableI2C2(lp) rccEnableAPB1(RCC_APB1ENR_I2C2EN, lp)
+#define rccEnableI2C2(lp) rccEnableAPB1(RCC_APB1ENR_I2C2EN)
 
 /**
  * @brief   Disables the I2C2 peripheral clock.
@@ -549,7 +549,7 @@
  *
  * @api
  */
-#define rccEnableOTG_FS(lp) rccEnableAHB(RCC_AHBENR_OTGFSEN, lp)
+#define rccEnableOTG_FS(lp) rccEnableAHB(RCC_AHBENR_OTGFSEN)
 
 /**
  * @brief   Disables the OTG_FS peripheral clock.
@@ -578,7 +578,7 @@
  *
  * @api
  */
-#define rccEnableSDIO(lp) rccEnableAHB(RCC_AHBENR_SDIOEN, lp)
+#define rccEnableSDIO(lp) rccEnableAHB(RCC_AHBENR_SDIOEN)
 
 /**
  * @brief   Disables the SDIO peripheral clock.
@@ -608,7 +608,7 @@
  *
  * @api
  */
-#define rccEnableSPI1(lp) rccEnableAPB2(RCC_APB2ENR_SPI1EN, lp)
+#define rccEnableSPI1(lp) rccEnableAPB2(RCC_APB2ENR_SPI1EN)
 
 /**
  * @brief   Disables the SPI1 peripheral clock.
@@ -632,7 +632,7 @@
  *
  * @api
  */
-#define rccEnableSPI2(lp) rccEnableAPB1(RCC_APB1ENR_SPI2EN, lp)
+#define rccEnableSPI2(lp) rccEnableAPB1(RCC_APB1ENR_SPI2EN)
 
 /**
  * @brief   Disables the SPI2 peripheral clock.
@@ -656,7 +656,7 @@
  *
  * @api
  */
-#define rccEnableSPI3(lp) rccEnableAPB1(RCC_APB1ENR_SPI3EN, lp)
+#define rccEnableSPI3(lp) rccEnableAPB1(RCC_APB1ENR_SPI3EN)
 
 /**
  * @brief   Disables the SPI3 peripheral clock.
@@ -685,7 +685,7 @@
  *
  * @api
  */
-#define rccEnableTIM1(lp) rccEnableAPB2(RCC_APB2ENR_TIM1EN, lp)
+#define rccEnableTIM1(lp) rccEnableAPB2(RCC_APB2ENR_TIM1EN)
 
 /**
  * @brief   Disables the TIM1 peripheral clock.
@@ -709,7 +709,7 @@
  *
  * @api
  */
-#define rccEnableTIM2(lp) rccEnableAPB1(RCC_APB1ENR_TIM2EN, lp)
+#define rccEnableTIM2(lp) rccEnableAPB1(RCC_APB1ENR_TIM2EN)
 
 /**
  * @brief   Disables the TIM2 peripheral clock.
@@ -733,7 +733,7 @@
  *
  * @api
  */
-#define rccEnableTIM3(lp) rccEnableAPB1(RCC_APB1ENR_TIM3EN, lp)
+#define rccEnableTIM3(lp) rccEnableAPB1(RCC_APB1ENR_TIM3EN)
 
 /**
  * @brief   Disables the TIM3 peripheral clock.
@@ -757,7 +757,7 @@
  *
  * @api
  */
-#define rccEnableTIM4(lp) rccEnableAPB1(RCC_APB1ENR_TIM4EN, lp)
+#define rccEnableTIM4(lp) rccEnableAPB1(RCC_APB1ENR_TIM4EN)
 
 /**
  * @brief   Disables the TIM4 peripheral clock.
@@ -781,7 +781,7 @@
  *
  * @api
  */
-#define rccEnableTIM5(lp) rccEnableAPB1(RCC_APB1ENR_TIM5EN, lp)
+#define rccEnableTIM5(lp) rccEnableAPB1(RCC_APB1ENR_TIM5EN)
 
 /**
  * @brief   Disables the TIM5 peripheral clock.
@@ -804,7 +804,7 @@
  *
  * @api
  */
-#define rccEnableTIM6(lp) rccEnableAPB1(RCC_APB1ENR_TIM6EN, lp)
+#define rccEnableTIM6(lp) rccEnableAPB1(RCC_APB1ENR_TIM6EN)
 
 /**
  * @brief   Disables the TIM6 peripheral clock.
@@ -827,7 +827,7 @@
  *
  * @api
  */
-#define rccEnableTIM7(lp) rccEnableAPB1(RCC_APB1ENR_TIM7EN, lp)
+#define rccEnableTIM7(lp) rccEnableAPB1(RCC_APB1ENR_TIM7EN)
 
 /**
  * @brief   Disables the TIM7 peripheral clock.
@@ -851,7 +851,7 @@
  *
  * @api
  */
-#define rccEnableTIM8(lp) rccEnableAPB2(RCC_APB2ENR_TIM8EN, lp)
+#define rccEnableTIM8(lp) rccEnableAPB2(RCC_APB2ENR_TIM8EN)
 
 /**
  * @brief   Disables the TIM8 peripheral clock.
@@ -878,7 +878,7 @@
  *
  * @api
  */
-#define rccEnableTIM9(lp) rccEnableAPB2(RCC_APB2ENR_TIM9EN, lp)
+#define rccEnableTIM9(lp) rccEnableAPB2(RCC_APB2ENR_TIM9EN)
 
 /**
  * @brief   Disables the TIM9 peripheral clock.
@@ -902,7 +902,7 @@
  *
  * @api
  */
-#define rccEnableTIM10(lp) rccEnableAPB2(RCC_APB2ENR_TIM10EN, lp)
+#define rccEnableTIM10(lp) rccEnableAPB2(RCC_APB2ENR_TIM10EN)
 
 /**
  * @brief   Disables the TIM10 peripheral clock.
@@ -926,7 +926,7 @@
  *
  * @api
  */
-#define rccEnableTIM11(lp) rccEnableAPB2(RCC_APB2ENR_TIM11EN, lp)
+#define rccEnableTIM11(lp) rccEnableAPB2(RCC_APB2ENR_TIM11EN)
 
 /**
  * @brief   Disables the TIM11 peripheral clock.
@@ -950,7 +950,7 @@
  *
  * @api
  */
-#define rccEnableTIM12(lp) rccEnableAPB1(RCC_APB1ENR_TIM12EN, lp)
+#define rccEnableTIM12(lp) rccEnableAPB1(RCC_APB1ENR_TIM12EN)
 
 /**
  * @brief   Disables the TIM12 peripheral clock.
@@ -974,7 +974,7 @@
  *
  * @api
  */
-#define rccEnableTIM13(lp) rccEnableAPB1(RCC_APB1ENR_TIM13EN, lp)
+#define rccEnableTIM13(lp) rccEnableAPB1(RCC_APB1ENR_TIM13EN)
 
 /**
  * @brief   Disables the TIM13 peripheral clock.
@@ -998,7 +998,7 @@
  *
  * @api
  */
-#define rccEnableTIM14(lp) rccEnableAPB1(RCC_APB1ENR_TIM14EN, lp)
+#define rccEnableTIM14(lp) rccEnableAPB1(RCC_APB1ENR_TIM14EN)
 
 /**
  * @brief   Disables the TIM14 peripheral clock.
@@ -1022,7 +1022,7 @@
  *
  * @api
  */
-#define rccEnableTIM15(lp) rccEnableAPB2(RCC_APB2ENR_TIM15EN, lp)
+#define rccEnableTIM15(lp) rccEnableAPB2(RCC_APB2ENR_TIM15EN)
 
 /**
  * @brief   Disables the TIM15 peripheral clock.
@@ -1046,7 +1046,7 @@
  *
  * @api
  */
-#define rccEnableTIM16(lp) rccEnableAPB2(RCC_APB2ENR_TIM16EN, lp)
+#define rccEnableTIM16(lp) rccEnableAPB2(RCC_APB2ENR_TIM16EN)
 
 /**
  * @brief   Disables the TIM16 peripheral clock.
@@ -1070,7 +1070,7 @@
  *
  * @api
  */
-#define rccEnableTIM17(lp) rccEnableAPB2(RCC_APB2ENR_TIM17EN, lp)
+#define rccEnableTIM17(lp) rccEnableAPB2(RCC_APB2ENR_TIM17EN)
 
 /**
  * @brief   Disables the TIM17 peripheral clock.
@@ -1099,7 +1099,7 @@
  *
  * @api
  */
-#define rccEnableUSART1(lp) rccEnableAPB2(RCC_APB2ENR_USART1EN, lp)
+#define rccEnableUSART1(lp) rccEnableAPB2(RCC_APB2ENR_USART1EN)
 
 /**
  * @brief   Disables the USART1 peripheral clock.
@@ -1123,7 +1123,7 @@
  *
  * @api
  */
-#define rccEnableUSART2(lp) rccEnableAPB1(RCC_APB1ENR_USART2EN, lp)
+#define rccEnableUSART2(lp) rccEnableAPB1(RCC_APB1ENR_USART2EN)
 
 /**
  * @brief   Disables the USART2 peripheral clock.
@@ -1147,7 +1147,7 @@
  *
  * @api
  */
-#define rccEnableUSART3(lp) rccEnableAPB1(RCC_APB1ENR_USART3EN, lp)
+#define rccEnableUSART3(lp) rccEnableAPB1(RCC_APB1ENR_USART3EN)
 
 /**
  * @brief   Disables the USART3 peripheral clock.
@@ -1171,7 +1171,7 @@
  *
  * @api
  */
-#define rccEnableUART4(lp) rccEnableAPB1(RCC_APB1ENR_UART4EN, lp)
+#define rccEnableUART4(lp) rccEnableAPB1(RCC_APB1ENR_UART4EN)
 
 /**
  * @brief   Disables the UART4 peripheral clock.
@@ -1195,7 +1195,7 @@
  *
  * @api
  */
-#define rccEnableUART5(lp) rccEnableAPB1(RCC_APB1ENR_UART5EN, lp)
+#define rccEnableUART5(lp) rccEnableAPB1(RCC_APB1ENR_UART5EN)
 
 /**
  * @brief   Disables the UART5 peripheral clock.
@@ -1224,7 +1224,7 @@
  *
  * @api
  */
-#define rccEnableUSB(lp) rccEnableAPB1(RCC_APB1ENR_USBEN, lp)
+#define rccEnableUSB(lp) rccEnableAPB1(RCC_APB1ENR_USBEN)
 
 /**
  * @brief   Disables the USB peripheral clock
@@ -1252,7 +1252,7 @@
  *
  * @api
  */
-#define rccEnableFSMC(lp) rccEnableAHB(RCC_AHBENR_FSMCEN, lp)
+#define rccEnableFSMC(lp) rccEnableAHB(RCC_AHBENR_FSMCEN)
 
 /**
  * @brief   Disables the FSMC peripheral clock.

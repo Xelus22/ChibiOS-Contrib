@@ -30,12 +30,7 @@
 /* Driver local definitions.                                                 */
 /*===========================================================================*/
 
-#if AT32_HAS_GPIOG
-#define APB2_EN_MASK  (RCC_APB2ENR_IOPAEN | RCC_APB2ENR_IOPBEN |            \
-                       RCC_APB2ENR_IOPCEN | RCC_APB2ENR_IOPDEN |            \
-                       RCC_APB2ENR_IOPEEN | RCC_APB2ENR_IOPFEN |            \
-                       RCC_APB2ENR_IOPGEN | RCC_APB2ENR_AFIOEN)
-#elif AT32_HAS_GPIOE
+#if AT32_HAS_GPIOE
 #define APB2_EN_MASK  (RCC_APB2ENR_IOPAEN | RCC_APB2ENR_IOPBEN |            \
                        RCC_APB2ENR_IOPCEN | RCC_APB2ENR_IOPDEN |            \
                        RCC_APB2ENR_IOPEEN | RCC_APB2ENR_AFIOEN)
@@ -93,7 +88,7 @@ void _pal_lld_init(const PALConfig *config) {
   /*
    * Enables the GPIO related clocks.
    */
-  rccEnableAPB2(APB2_EN_MASK, true);
+  rccEnableAPB2(APB2_EN_MASK);
 
   /*
    * Initial GPIO setup.

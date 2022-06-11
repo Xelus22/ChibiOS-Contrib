@@ -188,7 +188,7 @@ void hal_lld_init(void) {
 /*
  * Clocks initialization for all sub-families except CL.
  */
-void AT32_clock_init(void) {
+void at32_clock_init(void) {
 
 #if !AT32_NO_INIT
   /* HSI setup, it enforces the reset situation in order to handle possible
@@ -233,17 +233,14 @@ void AT32_clock_init(void) {
               AT32_PLLSRC | AT32_ADCPRE | AT32_PPRE2  | AT32_PPRE1    |
               AT32_HPRE;
 #if (AT32_USBSRC == AT32_USBSRC_HSI)
-  RCC->MISC = AT32_USBSRC
-  RCC->MISC2 = AT32_HSISRC
+  RCC->MISC |= AT32_USBSRC;
+  RCC->MISC2 |= AT32_HSI_SYS_CLK;
 #endif
 #else
   RCC->CFGR = AT32_MCOSEL |                AT32_PLLMUL | AT32_PLLXTPRE |
               AT32_PLLSRC | AT32_ADCPRE | AT32_PPRE2  | AT32_PPRE1    |
               AT32_HPRE;
 #endif
-
-  /* Flash setup and final clock selection.   */
-  FLASH->ACR = AT32_FLASHBITS;
 
   /* Switching to the configured clock source if it is different from HSI.*/
 #if (AT32_SW != AT32_SW_HSI)
@@ -258,104 +255,8 @@ void AT32_clock_init(void) {
 #endif
 #endif /* !AT32_NO_INIT */
 }
-
-#elif defined(AT32F10X_CL)
-/*
- * Clocks initialization for the CL sub-family.
- */
-void AT32_clock_init(void) {
-
-#if !AT32_NO_INIT
-  /* HSI setup, it enforces the reset situation in order to handle possible
-     problems with JTAG probes and re-initializations.*/
-  RCC->CR |= RCC_CR_HSION;                  /* Make sure HSI is ON.         */
-  while (!(RCC->CR & RCC_CR_HSIRDY))
-    ;                                       /* Wait until HSI is stable.    */
-
-  /* HSI is selected as new source without touching the other fields in
-     CFGR. Clearing the register has to be postponed after HSI is the
-     new source.*/
-  RCC->CFGR &= ~RCC_CFGR_SW;                /* Reset SW, selecting HSI.     */
-  while ((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_HSI)
-    ;                                       /* Wait until HSI is selected.  */
-
-  /* Registers finally cleared to reset values.*/
-  RCC->CR &= RCC_CR_HSITRIM | RCC_CR_HSION; /* CR Reset value.              */
-  RCC->CFGR = 0;                            /* CFGR reset value.            */
-
-#if AT32_HSE_ENABLED
-#if defined(AT32_HSE_BYPASS)
-  /* HSE Bypass.*/
-  RCC->CR |= RCC_CR_HSEBYP;
-#endif
-  /* HSE activation.*/
-  RCC->CR |= RCC_CR_HSEON;
-  while (!(RCC->CR & RCC_CR_HSERDY))
-    ;                                       /* Waits until HSE is stable.   */
-#endif
-
-#if AT32_LSI_ENABLED
-  /* LSI activation.*/
-  RCC->CSR |= RCC_CSR_LSION;
-  while ((RCC->CSR & RCC_CSR_LSIRDY) == 0)
-    ;                                       /* Waits until LSI is stable.   */
-#endif
-
-  /* Settings of various dividers and multipliers in CFGR2.*/
-  RCC->CFGR2 = AT32_PLL3MUL | AT32_PLL2MUL | AT32_PREDIV2 |
-               AT32_PREDIV1 | AT32_PREDIV1SRC;
-
-  /* PLL2 setup, if activated.*/
-#if AT32_ACTIVATE_PLL2
-  RCC->CR |= RCC_CR_PLL2ON;
-  while (!(RCC->CR & RCC_CR_PLL2RDY))
-    ;                                        /* Waits until PLL2 is stable. */
-#endif
-
-  /* PLL3 setup, if activated.*/
-#if AT32_ACTIVATE_PLL3
-  RCC->CR |= RCC_CR_PLL3ON;
-  while (!(RCC->CR & RCC_CR_PLL3RDY))
-    ;                                        /* Waits until PLL3 is stable. */
-#endif
-
-  /* PLL1 setup, if activated.*/
-#if AT32_ACTIVATE_PLL1
-  RCC->CFGR |= AT32_PLLMUL | AT32_PLLSRC;
-  RCC->CR   |= RCC_CR_PLLON;
-  while (!(RCC->CR & RCC_CR_PLLRDY))
-    ;                           /* Waits until PLL1 is stable.              */
-#endif
-
-  /* Clock settings.*/
-#if AT32_HAS_OTG1
-  RCC->CFGR = AT32_MCOSEL | AT32_OTGFSPRE | AT32_PLLMUL | AT32_PLLSRC |
-              AT32_ADCPRE | AT32_PPRE2    | AT32_PPRE1  | AT32_HPRE;
 #else
-  RCC->CFGR = AT32_MCO    |                  AT32_PLLMUL | AT32_PLLSRC |
-              AT32_ADCPRE | AT32_PPRE2    | AT32_PPRE1  | AT32_HPRE;
-#endif
-
-  /* Flash setup and final clock selection.   */
-  FLASH->ACR = AT32_FLASHBITS; /* Flash wait states depending on clock.    */
-  while ((FLASH->ACR & FLASH_ACR_LATENCY_Msk) !=
-         (AT32_FLASHBITS & FLASH_ACR_LATENCY_Msk)) {
-  }
-
-  /* Switching to the configured clock source if it is different from HSI.*/
-#if (AT32_SW != AT32_SW_HSI)
-  RCC->CFGR |= AT32_SW;        /* Switches on the selected clock source.   */
-  while ((RCC->CFGR & RCC_CFGR_SWS) != (AT32_SW << 2))
-    ;
-#endif
-
-#if !AT32_HSI_ENABLED
-  RCC->CR &= ~RCC_CR_HSION;
-#endif
-#endif /* !AT32_NO_INIT */
-}
-#else
-void AT32_clock_init(void) {}
+void at32_clock_init(void) {}
 #endif
 
 /** @} */

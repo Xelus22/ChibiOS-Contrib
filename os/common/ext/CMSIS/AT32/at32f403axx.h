@@ -34,8 +34,8 @@
 #ifndef __AT32F403Axx_H
 #define __AT32F403Axx_H
 
-#if !defined(WB32F3G71xx)
-  #define WB32F3G71xx
+#if !defined(AT32F403Axx)
+  #define AT32F403Axx
 #endif
 
 #ifdef __cplusplus

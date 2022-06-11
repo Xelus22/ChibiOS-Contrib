@@ -163,8 +163,8 @@
 #define AT32_ADCPRE_DIV4       (1 << 14)   /**< PPRE2 divided by 4.        */
 #define AT32_ADCPRE_DIV6       (2 << 14)   /**< PPRE2 divided by 6.        */
 #define AT32_ADCPRE_DIV8       (3 << 14)   /**< PPRE2 divided by 8.        */
-#define AT32_ADCPRE_DIV12      (1<<28)|(1<<14)   /**< PPRE2 divided by 12.       */
-#define AT32_ADCPRE_DIV16      (1<<28)|(3<<14)   /**< PPRE2 divided by 16.       */
+#define AT32_ADCPRE_DIV12      ((1<<28)|(1<<14))   /**< PPRE2 divided by 12.       */
+#define AT32_ADCPRE_DIV16      ((1<<28)|(3<<14))   /**< PPRE2 divided by 16.       */
 
 #define AT32_PLLSRC_HSI        (0 << 16)   /**< PLL clock source is HSI.   */
 #define AT32_PLLSRC_HSE        (1 << 16)   /**< PLL clock source is HSE.   */
@@ -769,9 +769,9 @@
 #elif AT32_ADCPRE == AT32_ADCPRE_DIV8
 #define AT32_ADCCLK                (AT32_PCLK2 / 8)
 #elif AT32_ADCPRE == AT32_ADCPRE_DIV12
-#define AT32_ADCCLK                (AT32_PCLK2 / 12)
+#define AT32_ADCCLK                ((AT32_PCLK2 / 6) /2 )
 #elif AT32_ADCPRE == AT32_ADCPRE_DIV16
-#define AT32_ADCCLK                (AT32_PCLK2 / 16)
+#define AT32_ADCCLK                ((AT32_PCLK2 / 4) /4)
 #else
 #error "invalid AT32_ADCPRE value specified"
 #endif
@@ -780,6 +780,9 @@
 #if AT32_ADCCLK > AT32_ADCCLK_MAX
 #define XSTR(x) STR(x)
 #define STR(x) #x
+#pragma message "hsi sysclk" XSTR(AT32_HSI_SYS_CLK)
+#pragma message "sysclk" XSTR(AT32_SYSCLK)
+#pragma message "hclk" XSTR(AT32_HCLK)
 #pragma message "pclk2" XSTR(AT32_PCLK2)
 #pragma message "adcpre" XSTR(AT32_ADCPRE)
 #pragma message "adcclk" XSTR(AT32_ADCCLK)
@@ -857,7 +860,7 @@
 extern "C" {
 #endif
   void hal_lld_init(void);
-  void AT32_clock_init(void);
+  void at32_clock_init(void);
 #ifdef __cplusplus
 }
 #endif
